@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.timeline {
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+}
+
+.track {
+  display: flex;
+  gap: 28px;
+  width: max-content;
+  animation: scroll 45s linear infinite;
+}
+
+.timeline:hover .track {
+  animation-play-state: paused;
+}
+
+.item {
+  flex: 0 0 auto;
+  display: block;
+  line-height: 0;
+  transition: transform .25s;
+}
+
+.item:hover {
+  transform: translateY(-8px) scale(1.06);
+}
+
+.item img {
+  height: 300px;
+  width: auto;
+  display: block;
+  border-radius: 8px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.25);
+}
+
+@keyframes scroll {
+  from { transform: translateX(100vw); }
+  to { transform: translateX(-100%); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="timeline">
+  <div class="track" id="track"></div>
+</div>
+
+<script>
+const items = [
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/2/The_Star_Ledger_1999_08_19_25.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('2')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B2e2516b7b3ba47a3957e1d5fd927b7fd%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/4/The_Star_Ledger_2000_07_14_74-2.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('4')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B9fbf521e2184423bb32e29b59ce372c0%5D%5B1%5D_%5B1%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/1/The_Star_Ledger_2000_09_24_35.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('1')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B18d2cfb559b743bf968f0a048e6a5344%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/5/The_Star_Ledger_2000_09_24_51.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('5')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Ba0567e4044f5493d8389323530439bef%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/3/The_Star_Ledger_2000_10_15_55.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('3')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B2882ba9372d8491d811dc7e6e09c49b6%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/7/Messenger_Press_2003_05_15_4.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('7')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bb7eded22204647d19e832923aa3fde99%5D%5B1%5D_%5B1%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/22/The_Times_2006_12_06_23.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('22')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Ba38ee0103b0d469c9dd624a6829b6ef2%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/39/The_Times_2007_07_12_3.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('39')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B8f14d0341a0e4cbc95def132472c652d%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/42/The_Times_2007_10_27_13.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('42')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bbb5f40e7cf4a4f21ac95eb2261b1ed36%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/31/The_Times_2007_11_01_17.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('31')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B1cd2e41309e34a459a9d5dbb8a17c56f%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/29/The_Star_Ledger_2008_07_16_68.jpg?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('29')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B7dac34c26c8a43abb6d9cc915f4ed589%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/28/The_Daily_Journal_2009_01_29_5.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('28')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B52b5936003fe4ab4bddd55a8b6fa9469%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/37/Press_of_Atlantic_City_2009_08_21_10.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('37')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B35a9862c3c744060bdfd0933fd24d4c3%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/40/The_Ocean_Star_2009_08_21_23.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('40')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bb93d4d84230f4f4f81c5e5a7bdfb62f9%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/44/The_Times_2010_02_19_13.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('44')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Ba39d08c6420840829af54ec0ee937614%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/27/The_Courier_News_2010_08_10_Page_3.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('27')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bdb8604365b8a43538cc62aff5f697dc9%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/38/The_Times_2011_03_20_9.jpg?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('38')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B315f2a3abc4b4a5f8662632a249112ed%5D%5B1%5D_%5B1%5D.jpg')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/30/The_Star_Ledger_2013_01_20_106.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('30')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B95b66198b02c4630a9e007fea968f8f7%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/20/The_Star_Ledger_2014_04_20_27.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('20')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bd8e4b1c527094c049ec75cdf9cce45c5%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/25/The_Times_2014_07_10_3.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('25')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B6c2d125ddaf440bf9ba0a16ef72460c0%5D%5B1%5D_%5B1%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/26/The_Star_Ledger_2014_12_21_89.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('26')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B70ec3c161b2541ccb52e3c7fe42565f4%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/23/The_Courier_News_2015_07_21_Page_B2.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('23')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bd8193d0ac78d4b2c8bbb2e37c6414a58%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/14/The_Times_2016_05_29_H3.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('14')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bd5702d5d64b04a3c9dc388ff22caef8d%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/18/Courier_Post_2016_08_30_Page_A5.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('18')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B63663b01e2f142068aefcafe40fdd64a%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/19/Courier_Post_2016_08_30_Page_A1.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('19')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B35df2237968f418f94fa82e777668ab6%5D%5B1%5D_%5B1%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/13/The_Times_2016_10_05_9.jpg?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('13')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bb816e81a110341f3a63d43e0c291dfa7%5D%5B1%5D_%5B1%5D.jpg')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/24/The_Times_2017_01_29_O7.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('24')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B2ee2295aef4f48e1bdc651efbaa45de1%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/9/The_Star_Ledger_2017_11_26_65.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('9')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5Bc4ccc98cb00945bd90f5a68349e7b9fb%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/15/The_Star_Ledger_2017_11_26_H3.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('15')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B37698993ccdc42d795f29a4a5fefbf65%5D%5B1%5D_%5B1%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  },
+  {
+    link: "https://woodsorg.sharepoint.com/sites/AlliesHome/Lists/Allies%20Digital%20Archive/Attachments/17/The_Central_New_Jersey_Home_News_2019_02_16_A2.pdf?web=1",
+    image: "https://woodsorg.sharepoint.com/sites/AlliesHome/_api/v2.1/sites('397e86cc-e81c-4a84-872b-0ec35dda80bb,a77bbbfc-7bb5-479b-8e38-c67b3951cba1')/lists('8aecd2ca-8ad0-44ef-bdf9-f4cc9acaee09')/items('17')/attachments('Reserved_ImageAttachment_%5B14%5D_%5BThumbnailImage%5D%5B32%5D_%5B9ab5d842633e4149bcacdc9159296da7%5D%5B1%5D_%5B2%5D.png')/thumbnails/0/c3000x2000/content?prefer=noredirect%2Cclosestavailablesize"
+  }
+];
+
+const track = document.getElementById("track");
+
+items.forEach(item => {
+  const a = document.createElement("a");
+  a.className = "item";
+  a.href = item.link;
+  a.target = "_blank";
+
+  const img = document.createElement("img");
+  img.src = item.image;
+
+  a.appendChild(img);
+  track.appendChild(a);
+});
+</script>
+
+</body>
+</html>
