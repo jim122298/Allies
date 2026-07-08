@@ -1,55 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
 html,body{
-    margin:0;
-    padding:0;
-    overflow:hidden;
-    background:transparent;
+  margin:0;
+  padding:0;
+  overflow:hidden;
+  background:transparent;
 }
 
 .timeline{
-    width:100%;
-    overflow:hidden;
-    padding:2px 0;
+  width:100%;
+  overflow:hidden;
+  padding:2px 0;
 }
 
 .track{
-    display:flex;
-    gap:10px;
-    width:max-content;
-    animation:scroll 320s linear infinite;
-    will-change:transform;
+  display:flex;
+  gap:10px;
+  width:max-content;
+  animation:scroll 320s linear infinite;
+  will-change:transform;
 }
 
 .timeline:hover .track{
-    animation-play-state:paused;
+  animation-play-state:paused;
 }
 
 .item{
-    flex:0 0 auto;
-    display:block;
-    line-height:0;
-    transition:.2s;
+  flex:0 0 auto;
+  display:block;
+  line-height:0;
+  transition:.2s;
 }
 
 .item:hover{
-    transform:translateY(-2px) scale(1.03);
+  transform:translateY(-2px) scale(1.03);
 }
 
 .item img{
-    height:95px;
-    width:auto;
-    display:block;
-    border-radius:4px;
-    filter:grayscale(100%) contrast(1.08);
-    box-shadow:0 2px 8px rgba(0,0,0,.15);
+  height:95px;
+  width:auto;
+  display:block;
+  border-radius:4px;
+  filter:grayscale(100%) contrast(1.08);
+  box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 
 @keyframes scroll{
-    from{
-        transform:translateX(0);
-    }
-    to{
-        transform:translateX(-50%);
-    }
+  from{ transform:translateX(0); }
+  to{ transform:translateX(-50%); }
 }
 </style>
 </head>
@@ -102,7 +103,7 @@ const items = [
 
 const track = document.getElementById("track");
 
-items.forEach(item => {
+[...items, ...items].forEach(item => {
   const a = document.createElement("a");
   a.className = "item";
   a.href = item.link;
