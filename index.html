@@ -21,12 +21,7 @@ html,body{
   display:flex;
   gap:10px;
   width:max-content;
-  animation:scroll 35s linear infinite;
   will-change:transform;
-}
-
-.timeline:hover .track{
-  animation-play-state:paused;
 }
 
 .item{
@@ -48,21 +43,12 @@ html,body{
   filter:grayscale(100%) contrast(1.08);
   box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
-
-@keyframes scroll{
-  from{
-    transform:translateX(0);
-  }
-  to{
-    transform:translateX(calc(-1 * var(--scroll-distance)));
-  }
-}
 </style>
 </head>
 
 <body>
 
-<div class="timeline">
+<div class="timeline" id="timeline">
   <div class="track" id="track"></div>
 </div>
 
@@ -106,38 +92,78 @@ const items = [
   }
 ];
 
+const timeline = document.getElementById("timeline");
 const track = document.getElementById("track");
 
-[...items, ...items].forEach(item => {
+let paused = false;
+let speed = 0.35;
+let x = 0;
+
+function makeItem(item){
   const a = document.createElement("a");
   a.className = "item";
   a.href = item.link;
   a.target = "_blank";
+  a.rel = "noopener noreferrer";
 
   const img = document.createElement("img");
   img.src = item.image;
   img.loading = "eager";
+  img.draggable = false;
 
   a.appendChild(img);
-  track.appendChild(a);
+  return a;
+}
+
+for(let i = 0; i < 8; i++){
+  items.forEach(item => {
+    track.appendChild(makeItem(item));
+  });
+}
+
+timeline.addEventListener("mouseenter", () => {
+  paused = true;
 });
 
-Promise.all(
-  [...track.querySelectorAll("img")].map(img => {
-    if(img.complete) return Promise.resolve();
+timeline.addEventListener("mouseleave", () => {
+  paused = false;
+});
 
-    return new Promise(resolve => {
-      img.onload = resolve;
-      img.onerror = resolve;
-    });
-  })
-).then(() => {
-  const distance = track.scrollWidth / 2;
-
-  document.documentElement.style.setProperty(
-    "--scroll-distance",
-    distance + "px"
+function imagesReady(){
+  return Promise.all(
+    [...track.querySelectorAll("img")].map(img => {
+      if(img.complete) return Promise.resolve();
+      return new Promise(resolve => {
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+    })
   );
+}
+
+function animate(){
+  if(!paused && track.children.length){
+    x -= speed;
+
+    const first = track.children[0];
+    const gap = 10;
+    const firstWidth = first.offsetWidth + gap;
+
+    if(Math.abs(x) >= firstWidth){
+      track.appendChild(first);
+      x += firstWidth;
+    }
+
+    track.style.transform = `translateX(${x}px)`;
+  }
+
+  requestAnimationFrame(animate);
+}
+
+imagesReady().then(() => {
+  x = 0;
+  track.style.transform = "translateX(0px)";
+  requestAnimationFrame(animate);
 });
 </script>
 
