@@ -1,54 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  overflow: hidden;
+html,body{
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    background:transparent;
 }
 
-.timeline {
-  width: 100%;
-  overflow: hidden;
-  padding: 4px 0;
+.timeline{
+    width:100%;
+    overflow:hidden;
+    padding:2px 0;
 }
 
-.track {
-  display: flex;
-  gap: 12px;
-  width: max-content;
-  animation: scroll 200s linear infinite;
+.track{
+    display:flex;
+    gap:10px;
+    width:max-content;
+    animation:scroll 320s linear infinite;
+    will-change:transform;
 }
 
-.timeline:hover .track {
-  animation-play-state: paused;
+.timeline:hover .track{
+    animation-play-state:paused;
 }
 
-.item {
-  flex: 0 0 auto;
-  display: block;
-  line-height: 0;
-  transition: transform .25s;
+.item{
+    flex:0 0 auto;
+    display:block;
+    line-height:0;
+    transition:.2s;
 }
 
-.item:hover {
-  transform: translateY(-3px) scale(1.03);
+.item:hover{
+    transform:translateY(-2px) scale(1.03);
 }
 
-.item img {
-  height: 110px;
-  width: auto;
-  display: block;
-  border-radius: 5px;
-  box-shadow: 0 4px 10px rgba(0,0,0,.18);
+.item img{
+    height:95px;
+    width:auto;
+    display:block;
+    border-radius:4px;
+    filter:grayscale(100%) contrast(1.08);
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 
-@keyframes scroll {
-  from { transform: translateX(100vw); }
-  to { transform: translateX(-100%); }
+@keyframes scroll{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-50%);
+    }
 }
 </style>
 </head>
